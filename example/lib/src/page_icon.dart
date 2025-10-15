@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:lordicon/lordicon.dart';
 
 class PageIcon extends StatefulWidget {
@@ -38,7 +37,7 @@ class _PageIconState extends State<PageIcon> {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -48,14 +47,14 @@ class _PageIconState extends State<PageIcon> {
                 },
                 child: const Text('pause'),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
                   _controller.play();
                 },
                 child: const Text('play'),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
                   _controller.playFromBeginning();
@@ -64,7 +63,7 @@ class _PageIconState extends State<PageIcon> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -74,14 +73,14 @@ class _PageIconState extends State<PageIcon> {
                 },
                 child: const Text('direction'),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
                   _controller.goToFirstFrame();
                 },
                 child: const Text('first frame'),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
                   _controller.goToLastFrame();
@@ -90,7 +89,7 @@ class _PageIconState extends State<PageIcon> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -100,7 +99,7 @@ class _PageIconState extends State<PageIcon> {
                 },
                 child: const Text('state: in-reveal'),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               ElevatedButton(
                 onPressed: () {
                   _controller.state = 'morph-unlocked';

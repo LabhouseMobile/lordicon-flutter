@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
-import 'package:path/path.dart' as p;
 
 import 'provider_io.dart' if (dart.library.html) 'provider_web.dart' as network;
 
@@ -36,35 +35,33 @@ class AssetProvider extends LottieProvider {
   });
 
   final String assetName;
-  String get keyName =>
-      package == null ? assetName : 'packages/$package/$assetName';
+  String get keyName => package == null ? assetName : 'packages/$package/$assetName';
 
   final AssetBundle? bundle;
 
   final String? package;
 
   @override
-  Future<LottieComposition> load() {
+  Future<LottieComposition> load({BuildContext? context}) {
     return sharedLottieCache.putIfAbsent(this, () async {
       final chosenBundle = bundle ?? rootBundle;
 
       var data = handleJsonData(await chosenBundle.loadString(keyName));
       final iconData = Uint8List.fromList(utf8.encode(data));
 
-      var composition = await LottieComposition.fromBytes(iconData,
-          name: p.url.basenameWithoutExtension(keyName),
-          imageProviderFactory: imageProviderFactory);
+      var composition = await LottieComposition.fromBytes(
+        iconData,
+        decoder: decoder,
+      );
 
       return composition;
     });
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other.runtimeType != runtimeType) return false;
-    return other is AssetProvider &&
-        other.keyName == keyName &&
-        other.bundle == bundle;
+    return other is AssetProvider && other.keyName == keyName && other.bundle == bundle;
   }
 
   @override
@@ -82,7 +79,7 @@ class NetworkProvider extends LottieProvider {
   final Map<String, String>? headers;
 
   @override
-  Future<LottieComposition> load() {
+  Future<LottieComposition> load({BuildContext? context}) {
     return sharedLottieCache.putIfAbsent(this, () async {
       var resolved = Uri.base.resolve(url);
       var bytes = await network.loadHttp(resolved, headers: headers);
@@ -90,16 +87,17 @@ class NetworkProvider extends LottieProvider {
 
       final iconData = Uint8List.fromList(utf8.encode(data));
 
-      var composition = await LottieComposition.fromBytes(iconData,
-          name: p.url.basenameWithoutExtension(url),
-          imageProviderFactory: imageProviderFactory);
+      var composition = await LottieComposition.fromBytes(
+        iconData,
+        decoder: decoder,
+      );
 
       return composition;
     });
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other.runtimeType != runtimeType) return false;
     return other is NetworkProvider && other.url == url;
   }
