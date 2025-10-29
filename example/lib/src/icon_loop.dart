@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:lordicon/lordicon.dart';
 
 class IconLoop extends StatelessWidget {
@@ -20,7 +19,7 @@ class IconLoop extends StatelessWidget {
     });
 
     return Container(
-      decoration: BoxDecoration(color: Colors.red),
+      decoration: const BoxDecoration(color: Colors.red),
       child: IconViewer(
         width: 196,
         height: 96,
